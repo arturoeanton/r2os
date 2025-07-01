@@ -309,6 +309,182 @@ Desarrollar competencias avanzadas en diseño e implementación de sistemas oper
 
 ---
 
+## 🚀 TRABAJO PRÁCTICO FINAL INTEGRADOR
+### "Sistema Operativo Multimedia Educativo"
+
+#### **Objetivo:**
+Extender el mini-kernel educativo con capacidades multimedia y de red, implementando un sistema operativo funcional con interfaz gráfica básica.
+
+#### **Requerimientos del Proyecto (Obligatorios):**
+
+**1. Sistema de Archivos Avanzado (Semanas 1-4)**
+- Implementar subdirectorios reales con navegación (`cd`, `..`, rutas absolutas)
+- Agregar soporte para archivos binarios y metadatos extendidos
+- Crear sistema de enlaces simbólicos y duros
+- Implementar journaling básico para integridad de datos
+
+**2. Multitasking Real (Semanas 5-8)**
+- Implementar scheduler preemptive con múltiples colas de prioridad
+- Crear al menos 3 procesos que ejecuten concurrentemente
+- Agregar soporte para procesos en background (`&`)
+- Implementar señales básicas (SIGKILL, SIGSTOP, SIGCONT)
+
+**3. Interfaz Gráfica Básica (Semanas 9-12)**
+- Implementar modo gráfico VGA 320x200x256
+- Crear sistema de ventanas básico con al menos 2 ventanas concurrentes
+- Implementar mouse driver PS/2 con cursor gráfico
+- Crear al menos 3 aplicaciones gráficas:
+  - Editor de texto con scroll
+  - Calculadora con interfaz gráfica
+  - Juego simple (Tetris, Snake, o similar)
+
+**4. Red y Comunicaciones (Semanas 13-16)**
+- Implementar stack TCP/IP básico (solo ping y echo)
+- Crear servidor HTTP mínimo que sirva páginas estáticas
+- Implementar cliente Telnet básico
+- Agregar soporte para transferencia de archivos simple
+
+#### **Características Técnicas Obligatorias:**
+
+**A. Gestión de Memoria Avanzada**
+```c
+// Implementar heap dinámico con malloc/free
+void* malloc(size_t size);
+void free(void* ptr);
+void* realloc(void* ptr, size_t new_size);
+
+// Sistema de páginas básico
+int mmap(void* addr, size_t length, int prot);
+int munmap(void* addr, size_t length);
+```
+
+**B. Sistema de Procesos**
+```c
+// Fork básico para crear procesos
+pid_t fork(void);
+int exec(const char* path, char* argv[]);
+void exit(int status);
+pid_t wait(int* status);
+
+// Scheduler con al menos 3 algoritmos seleccionables
+void set_scheduler(int algorithm); // 0=FIFO, 1=RR, 2=Priority
+```
+
+**C. Drivers de Dispositivos**
+```c
+// Driver de mouse con eventos
+typedef struct {
+    int x, y;
+    int buttons;
+    int wheel;
+} mouse_event_t;
+
+int mouse_read(mouse_event_t* event);
+
+// Driver de sonido básico (beep/tono)
+void play_tone(int frequency, int duration_ms);
+void play_melody(int* frequencies, int* durations, int count);
+```
+
+**D. Sistema de Red**
+```c
+// Socket básico para red
+int socket(int domain, int type, int protocol);
+int bind(int sockfd, struct sockaddr* addr, socklen_t addrlen);
+int listen(int sockfd, int backlog);
+int accept(int sockfd, struct sockaddr* addr, socklen_t* addrlen);
+int connect(int sockfd, struct sockaddr* addr, socklen_t addrlen);
+```
+
+#### **Aplicaciones Requeridas (Mínimo 5):**
+
+**1. Shell Avanzado**
+- Soporte para variables de entorno
+- Redirección avanzada (`>`, `>>`, `<`, `2>`)
+- Pipes múltiples (`cmd1 | cmd2 | cmd3`)
+- Job control (`jobs`, `fg`, `bg`, `nohup`)
+- Autocompletado de comandos y archivos
+
+**2. Editor de Texto Gráfico**
+- Interfaz con menús y botones
+- Soporte para archivos de múltiples páginas
+- Find/Replace básico
+- Syntax highlighting para al menos 2 lenguajes
+
+**3. Administrador de Archivos**
+- Vista de íconos y lista
+- Operaciones drag & drop básicas
+- Previsualización de archivos de texto
+- Propiedades de archivos con edición
+
+**4. Monitor del Sistema**
+- Vista en tiempo real de procesos activos
+- Gráficos de uso de CPU y memoria
+- Kill/pause/resume de procesos
+- Información de dispositivos conectados
+
+**5. Aplicación de Red**
+- Cliente chat básico
+- Navegador web minimalista (solo HTML básico)
+- Transferencia de archivos P2P
+- Monitor de red con estadísticas
+
+#### **Criterios de Evaluación (100 puntos):**
+
+**Funcionalidad Básica (30 puntos)**
+- Sistema arranca y funciona estable (10 pts)
+- Todos los componentes obligatorios implementados (20 pts)
+
+**Calidad Técnica (25 puntos)**
+- Código bien documentado y modular (10 pts)
+- Manejo adecuado de errores (5 pts)
+- Eficiencia en algoritmos críticos (10 pts)
+
+**Interfaz y Usabilidad (20 puntos)**
+- Interfaz gráfica funcional y atractiva (10 pts)
+- Aplicaciones fáciles de usar (10 pts)
+
+**Innovación y Extras (15 puntos)**
+- Características no requeridas pero útiles (10 pts)
+- Soluciones creativas a problemas técnicos (5 pts)
+
+**Documentación y Presentación (10 puntos)**
+- Manual de usuario completo (5 pts)
+- Presentación técnica clara (5 pts)
+
+#### **Entregables y Fechas:**
+
+**Milestone 1 (Semana 4):** Sistema de archivos avanzado funcional
+**Milestone 2 (Semana 8):** Multitasking con al menos 2 procesos concurrentes
+**Milestone 3 (Semana 12):** Interfaz gráfica con 2 aplicaciones funcionando
+**Entrega Final (Semana 16):** Sistema completo con todas las aplicaciones
+
+#### **Recursos y Soporte:**
+
+**Código Base Proporcionado:**
+- Framework básico para modo gráfico VGA
+- Skeleton de drivers de mouse y red
+- Bibliotecas auxiliares para matemáticas y string handling
+- Suite de testing automatizado
+
+**Documentación Técnica:**
+- Especificaciones detalladas de cada componente
+- Ejemplos de código para patrones complejos
+- Diagramas de arquitectura del sistema
+- Referencias a implementaciones reales
+
+#### **Bonificaciones Adicionales (+20 puntos):**
+
+**Implementaciones Avanzadas:**
+- Sistema de audio con reproducción de archivos WAV (+5 pts)
+- Soporte para USB básico (teclado/mouse) (+10 pts)
+- Compilador C básico que genere código para el kernel (+15 pts)
+- Emulador de máquina virtual dentro del OS (+20 pts)
+
+**Este proyecto desafía a los estudiantes a aplicar todos los conceptos del curso mientras implementan funcionalidades reales de un sistema operativo moderno.**
+
+---
+
 ## 📚 Recursos de Estudio
 
 ### Libros de Texto Principal
