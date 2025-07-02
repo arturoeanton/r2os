@@ -1,0 +1,37 @@
+# Makefile de debug con salida serial
+PREFIX   := i686-elf
+CC       := $(PREFIX)-gcc
+AS       := $(PREFIX)-as
+LD       := $(PREFIX)-ld
+OBJCOPY  := $(PREFIX)-objcopy
+
+CFLAGS   := -std=gnu99 -ffreestanding -nostdlib -fno-builtin -O2 -Wall -Wextra -g
+ASFLAGS  := -g
+LDFLAGS  := -T linker.ld -nostdlib
+QEMU     := qemu-system-i386
+
+OBJS := boot.o debug-kernel.o
+
+all: debug-kernel.elf
+
+debug-kernel.elf: $(OBJS)
+	$(LD) $(LDFLAGS) -o $@ $^
+
+boot.o: boot.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+debug-kernel.o: debug-kernel.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# Ejecutar con puerto serial redirigido a stdout
+run: debug-kernel.elf
+	$(QEMU) -kernel debug-kernel.elf -m 32 -display none -serial stdio
+
+# Ejecutar con GUI
+run-gui: debug-kernel.elf
+	$(QEMU) -kernel debug-kernel.elf -m 32
+
+clean:
+	rm -f *.o debug-kernel.elf
+
+.PHONY: all clean run run-gui

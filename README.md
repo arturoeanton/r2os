@@ -64,14 +64,45 @@ r2os/
 ├── Makefile           # Sistema de construcción
 ├── README.md          # Este archivo
 ├── CLAUDE.md          # Instrucciones para desarrollo
-├── PLAN_CURSO_SO.md   # Plan del curso de 4 meses
-├── CAPITULO_*.md      # 4 capítulos del curso
-└── *.md               # Documentación adicional
+├── curso/             # 📚 Material educativo completo
+│   ├── PLAN_CURSO_SO.md    # Plan del curso de 4 meses
+│   ├── CAPITULO_01.md      # Arquitectura x86 y Bootloaders
+│   ├── CAPITULO_02.md      # Gestión de Memoria y E/S
+│   ├── CAPITULO_03.md      # Sistemas de Archivos
+│   ├── CAPITULO_04.md      # Shell y Comunicación Inter-Proceso
+│   └── README.md           # Guía del curso
+└── docker-build/      # 🐳 Entorno Docker de desarrollo
+    ├── Dockerfile          # Imagen con i686-elf-gcc
+    ├── Makefile           # Comandos Docker simplificados
+    ├── README.md          # Documentación Docker
+    └── .dockerignore      # Optimización de contexto
 ```
 
 ## 🚀 Compilación y Ejecución
 
-### Prerrequisitos
+### 🐳 Opción 1: Usando Docker (Recomendado - SIN XQuartz)
+
+**Sin instalación compleja - Compilación en Docker + QEMU nativo**
+
+```bash
+# Navegar al entorno Docker
+cd docker-build
+
+# Configuración automática completa (solo la primera vez)
+make setup-all
+
+# ¡Compilar y ejecutar con ventana!
+make run-gui
+```
+
+**Ventajas del nuevo método:**
+- ✅ **Sin XQuartz**: QEMU se ejecuta en el host nativo
+- ✅ **Compilación aislada**: Cross-compiler en Docker  
+- ✅ **GUI nativa**: Ventana QEMU normal del sistema
+- ✅ **Setup automático**: Instala QEMU automáticamente
+- ✅ **Cero configuración**: Un solo comando para empezar
+
+### 🔧 Opción 2: Instalación Local
 
 ```bash
 # Ubuntu/Debian
@@ -83,8 +114,7 @@ sudo apt install gcc-multilib g++-multilib
 # Seguir guía en: https://wiki.osdev.org/GCC_Cross-Compiler
 ```
 
-### Comandos Básicos
-
+**Comandos básicos:**
 ```bash
 # Compilar el kernel
 make
@@ -211,18 +241,24 @@ shell> insln archivo.txt 2                  # Insertar línea en blanco en posic
 
 ## 📚 Material Educativo
 
-### Curso Completo de Sistemas Operativos
+### 📚 Curso Completo de Sistemas Operativos (carpeta `curso/`)
 1. **CAPITULO_01.md** - Arquitectura x86 y Bootloaders
 2. **CAPITULO_02.md** - Gestión de Memoria y E/S
 3. **CAPITULO_03.md** - Sistemas de Archivos
 4. **CAPITULO_04.md** - Shell y Comunicación Inter-Proceso
 
-### Plan de Estudio de 4 Meses
+### 📅 Plan de Estudio de 4 Meses
 - **PLAN_CURSO_SO.md** - Cronograma detallado semanal
 - **16 semanas** de contenido progresivo
 - **Proyectos prácticos** cada semana
-- **Evaluaciones** y trabajo final
+- **Evaluaciones** y trabajo final integrador
 - **Extensiones avanzadas** para estudiantes destacados
+
+### 🐳 Entorno Docker (carpeta `docker-build/`)
+- **Setup automático** de cross-compiler i686-elf-gcc
+- **QEMU integrado** para emulación
+- **Funciona en Linux, macOS y Windows**
+- **Sin configuración compleja** de herramientas
 
 ## 🎓 Ejercicios y Proyectos
 
@@ -300,16 +336,28 @@ Proyecto educativo de código abierto. Libre para uso académico y educativo.
 
 ## 🚀 **¡Empezar es fácil!**
 
+### 🐳 Con Docker (Recomendado)
+```bash
+git clone <repository>
+cd r2os/docker-build
+make setup-all    # Configura todo automáticamente
+make run-gui      # ¡Compilar y ejecutar con ventana!
+```
+
+### 🔧 Instalación Local
 ```bash
 git clone <repository>
 cd r2os
-make run
+make run        # (Requiere i686-elf-gcc instalado)
+```
 
-# En el shell del kernel:
+### 💻 En el shell del kernel:
+```bash
 shell> help
 shell> testpipe    # Si tienes problemas con el carácter |
 shell> echo "Hello World" | rev
 shell> ls | wc
+shell> cat curso/README.md    # ¡Explorar el curso!
 ```
 
-**¡Explora, experimenta y aprende cómo funciona un sistema operativo desde adentro!** 🎓✨
+**¡Explora, experimenta y aprende cómo funciona un sistema operativo desde adentro!** 🎓✨🐳

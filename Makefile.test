@@ -1,0 +1,35 @@
+# Makefile de test para debugging
+PREFIX   := i686-elf
+CC       := $(PREFIX)-gcc
+AS       := $(PREFIX)-as
+LD       := $(PREFIX)-ld
+OBJCOPY  := $(PREFIX)-objcopy
+
+CFLAGS   := -std=gnu99 -ffreestanding -nostdlib -fno-builtin -O2 -Wall -Wextra -g
+ASFLAGS  := -g
+LDFLAGS  := -T linker.ld -nostdlib
+QEMU     := qemu-system-i386
+
+OBJS := boot.o test-kernel.o
+
+all: test-kernel.elf
+
+test-kernel.elf: $(OBJS)
+	$(LD) $(LDFLAGS) -o $@ $^
+
+boot.o: boot.s
+	$(AS) $(ASFLAGS) -o $@ $<
+
+test-kernel.o: test-kernel.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+run: test-kernel.elf
+	$(QEMU) -kernel test-kernel.elf -m 32 -nographic
+
+run-gui: test-kernel.elf
+	$(QEMU) -kernel test-kernel.elf -m 32
+
+clean:
+	rm -f *.o test-kernel.elf
+
+.PHONY: all clean run run-gui

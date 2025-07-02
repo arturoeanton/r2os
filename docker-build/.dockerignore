@@ -1,0 +1,59 @@
+# .dockerignore para Mini-Kernel Educativo
+# Evita copiar archivos innecesarios al contexto de Docker
+
+# Archivos de compilación
+*.o
+*.elf
+*.bin
+*.img
+*.iso
+
+# Directorios de build
+build/
+dist/
+output/
+
+# Archivos de editor
+*.swp
+*.swo
+*~
+.*.tmp
+.DS_Store
+Thumbs.db
+
+# Logs y temporales
+*.log
+*.tmp
+*.bak
+
+# Control de versiones
+.git/
+.gitignore
+.gitmodules
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# Documentación generada
+docs/build/
+*.pdf
+
+# Archivos de configuración local
+.env
+local.conf
+
+# Backups
+*.backup
+*.old
+
+# Archivos específicos del proyecto
+myos.elf
+myos.bin
+boot.o
+kernel.o
+
+# Archivos de Docker previos
+minikernel-dev.tar.gz
+DOCKER_USAGE.md

@@ -1,0 +1,140 @@
+# Dockerfile para Mini-Kernel Educativo
+# Entorno de desarrollo con cross-compiler i686-elf
+FROM ubuntu:22.04
+
+# Evitar interacciones durante la instalación
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Variables de configuración del cross-compiler
+ENV TARGET=i686-elf
+ENV PREFIX=/usr/local/cross
+ENV PATH="$PREFIX/bin:$PATH"
+
+# Crear usuario no-root para desarrollo
+RUN useradd -m -s /bin/bash developer && \
+    usermod -aG sudo developer && \
+    echo "developer ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Actualizar sistema e instalar dependencias base
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    g++ \
+    make \
+    libc6-dev \
+    bison \
+    flex \
+    libgmp3-dev \
+    libmpc-dev \
+    libmpfr-dev \
+    texinfo \
+    qemu-system-x86 \
+    gdb \
+    git \
+    wget \
+    curl \
+    nano \
+    vim \
+    tree \
+    file \
+    sudo \
+    ca-certificates && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Crear directorio para el cross-compiler
+RUN mkdir -p $PREFIX
+
+# Descargar y compilar Binutils
+WORKDIR /tmp
+RUN wget -q https://ftp.gnu.org/gnu/binutils/binutils-2.39.tar.gz && \
+    tar -xf binutils-2.39.tar.gz && \
+    mkdir build-binutils && \
+    cd build-binutils && \
+    ../binutils-2.39/configure \
+        --target=$TARGET \
+        --prefix=$PREFIX \
+        --with-sysroot \
+        --disable-nls \
+        --disable-werror && \
+    make -j$(nproc) && \
+    make install && \
+    cd /tmp && \
+    rm -rf binutils-2.39* build-binutils
+
+# Descargar y compilar GCC (primera pasada - sin libc)
+RUN wget -q https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.gz && \
+    tar -xf gcc-12.2.0.tar.gz && \
+    mkdir build-gcc && \
+    cd build-gcc && \
+    ../gcc-12.2.0/configure \
+        --target=$TARGET \
+        --prefix=$PREFIX \
+        --disable-nls \
+        --enable-languages=c,c++ \
+        --without-headers && \
+    make -j$(nproc) all-gcc && \
+    make -j$(nproc) all-target-libgcc && \
+    make install-gcc && \
+    make install-target-libgcc && \
+    cd /tmp && \
+    rm -rf gcc-12.2.0* build-gcc
+
+# Verificar instalación del cross-compiler
+RUN which i686-elf-gcc && \
+    which i686-elf-as && \
+    which i686-elf-ld && \
+    i686-elf-gcc --version
+
+# Instalar herramientas adicionales útiles para desarrollo
+RUN apt-get update && apt-get install -y \
+    objdump \
+    manpages-dev \
+    emacs-nox && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configurar directorio de trabajo
+WORKDIR /workspace
+RUN chown -R developer:developer /workspace
+
+# Crear scripts útiles
+RUN echo '#!/bin/bash\necho "=== Verificación del Entorno de Desarrollo ==="\necho "Cross-compiler i686-elf:"\nwhich i686-elf-gcc && i686-elf-gcc --version | head -1\necho ""\necho "QEMU x86:"\nwhich qemu-system-i386 && qemu-system-i386 --version | head -1\necho ""\necho "GDB:"\nwhich gdb && gdb --version | head -1\necho ""\necho "✅ Entorno listo para desarrollo de OS!"' > /usr/local/bin/check-environment && \
+    chmod +x /usr/local/bin/check-environment
+
+RUN echo '#!/bin/bash\necho "🔨 Compilando Mini-Kernel Educativo..."\nmake clean\nmake -j$(nproc)\nif [ $? -eq 0 ]; then\n    echo "✅ Compilación exitosa!"\n    echo "Ejecuta: make run"\nelse\n    echo "❌ Error en la compilación"\n    exit 1\nfi' > /usr/local/bin/build-kernel && \
+    chmod +x /usr/local/bin/build-kernel
+
+RUN echo '#!/bin/bash\necho "🚀 Ejecutando kernel en modo debug..."\necho "GDB conectará en puerto 1234"\necho "En otra terminal: gdb myos.elf -> target remote localhost:1234"\nqemu-system-i386 -kernel myos.elf -m 32 -s -S' > /usr/local/bin/run-kernel-debug && \
+    chmod +x /usr/local/bin/run-kernel-debug
+
+# Configurar variables de entorno para el desarrollo
+ENV CC=i686-elf-gcc
+ENV AS=i686-elf-as
+ENV LD=i686-elf-ld
+ENV OBJCOPY=i686-elf-objcopy
+ENV OBJDUMP=i686-elf-objdump
+
+# Cambiar al usuario developer
+USER developer
+
+# Configurar bash para el usuario developer
+RUN echo 'export PATH="$PREFIX/bin:$PATH"' >> ~/.bashrc && \
+    echo 'export CC=i686-elf-gcc' >> ~/.bashrc && \
+    echo 'export AS=i686-elf-as' >> ~/.bashrc && \
+    echo 'export LD=i686-elf-ld' >> ~/.bashrc && \
+    echo 'echo "🎓 Mini-Kernel Educativo - Entorno de Desarrollo"' >> ~/.bashrc && \
+    echo 'echo "Comandos útiles:"' >> ~/.bashrc && \
+    echo 'echo "  check-environment  - Verificar herramientas instaladas"' >> ~/.bashrc && \
+    echo 'echo "  build-kernel      - Compilar el kernel"' >> ~/.bashrc && \
+    echo 'echo "  make run          - Ejecutar kernel"' >> ~/.bashrc && \
+    echo 'echo "  run-kernel-debug  - Ejecutar con debugging"' >> ~/.bashrc && \
+    echo 'echo ""' >> ~/.bashrc
+
+# Punto de entrada por defecto
+CMD ["/bin/bash"]
+
+# Metadatos
+LABEL edu.minikernel.tools="i686-elf-gcc,qemu,gdb"
+LABEL edu.minikernel.version="cross-gcc-12.2.0"
+LABEL edu.minikernel.target="i686-elf"

@@ -47,6 +47,22 @@ kernel.o: kernel.c
 run: myos.elf
 	$(QEMU) $(QEMUFLAGS)
 
+# Regla para ejecutar con más debugging
+debug: myos.elf
+	$(QEMU) -kernel myos.elf -m 32 -nographic -d int,cpu_reset -no-reboot
+
+# Regla para ejecutar con monitor QEMU
+monitor: myos.elf
+	$(QEMU) -kernel myos.elf -m 32 -monitor stdio
+
+# Regla para ejecutar sin -nographic (con ventana)
+run-gui: myos.elf
+	$(QEMU) -kernel myos.elf -m 32
+
+# Regla para ejecutar con salida serial para debugging
+run-serial: myos.elf
+	$(QEMU) -kernel myos.elf -m 32 -display none -serial stdio
+
 # Regla para limpiar archivos generados
 clean:
 	rm -f *.o *.elf *.bin

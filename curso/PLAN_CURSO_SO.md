@@ -1,5 +1,5 @@
 # Plan de Curso: Sistemas Operativos Avanzado
-## 4 Meses - Basado en Mini Kernel Educativo
+## 4 Meses - Basado en Mini Kernel Educativo (8 Capítulos Completos)
 
 ---
 
@@ -239,110 +239,131 @@ Desarrollar competencias avanzadas en diseño e implementación de sistemas oper
 
 ---
 
-### **MES 4: Redes, Seguridad y Optimización**
+### **MES 4: Redes, Seguridad y Virtualización**
 
-#### **Semana 13: Redes Básicas**
-**Teoría (3 horas):**
-- Stack de protocolos: Ethernet, IP, TCP/UDP
+#### **Semana 13: Redes y Protocolos**
+**Teoría (3 horas):** [CAPÍTULO 7]
+- Stack de protocolos: Ethernet, IP, TCP/UDP, ICMP
 - Socket programming en kernel space
-- Network device drivers
-- Routing y switching básico
+- Network device drivers y NIC management
+- Routing, switching y protocolos de red
 
 **Práctica (3 horas):**
 - Driver básico para tarjeta de red (simulada)
-- Implementación de ping simple
-- Stack TCP/IP minimalista
-- Comando `netstat` básico
+- Implementación completa de ping y protocolos ICMP
+- Stack TCP/IP con UDP y sockets básicos
+- Comandos de red: `ping`, `netstat`, `ifconfig`, `arp`
 
-**Entregable:** Capacidades básicas de red
+**Entregable:** Stack de red funcional con múltiples protocolos
 
 ---
 
-#### **Semana 14: Seguridad y Protección**
-**Teoría (3 horas):**
-- User mode vs kernel mode
+#### **Semana 14: Seguridad y Virtualización - Parte I**
+**Teoría (3 horas):** [CAPÍTULO 8 - Parte I]
+- User mode vs kernel mode y anillos de protección
 - System calls y privilege escalation
-- Access control lists (ACLs)
-- Vulnerability mitigation: ASLR, stack canaries
+- Access control: permisos, usuarios, grupos
+- Vulnerability mitigation: ASLR, stack canaries, NX bit
 
 **Práctica (3 horas):**
-- Implementación de user mode básico
-- System call interface
-- Sistema de permisos para archivos
-- Protección contra buffer overflows
+- Implementación de user mode y separación de privilegios
+- Sistema completo de usuarios y permisos estilo UNIX
+- Protección contra buffer overflows y ataques comunes
+- Comandos de seguridad: `login`, `su`, `chmod`, `whoami`
 
-**Entregable:** Sistema con separación user/kernel
+**Entregable:** Sistema con seguridad robusta y control de acceso
 
 ---
 
-#### **Semana 15: Rendimiento y Optimización**
-**Teoría (3 horas):**
-- Profiling y benchmarking
-- Cache optimization
-- Lock-free programming
-- Real-time systems constraints
+#### **Semana 15: Virtualización y Contenedores**
+**Teoría (3 horas):** [CAPÍTULO 8 - Parte II]
+- Tipos de virtualización: Type 1, Type 2, para-virtualización
+- Hypervisors y tecnologías Intel VT-x/AMD-V
+- Contenedores: namespaces, cgroups, aislamiento
+- Docker-style containers vs VMs
 
 **Práctica (3 horas):**
-- Herramientas de profiling del kernel
-- Optimización de algoritmos críticos
-- Implementación de estructuras lock-free básicas
-- Benchmarks de rendimiento
+- Implementación de hypervisor básico para VMs
+- Sistema de contenedores con aislamiento de procesos
+- Gestión de recursos virtualizados
+- Comandos: `vm_create`, `vm_start`, `container_run`
 
-**Entregable:** Sistema optimizado con métricas de rendimiento
+**Entregable:** Sistema con capacidades de virtualización
 
 ---
 
-#### **Semana 16: Proyecto Final y Presentación**
+#### **Semana 16: Integración Final y Proyecto Avanzado**
 **Teoría (2 horas):**
-- Review de conceptos avanzados
-- Tendencias futuras en sistemas operativos
-- Microkernel vs monolithic design
-- OS para sistemas embebidos e IoT
+- Review completo de los 8 capítulos implementados
+- Sistemas operativos modernos: Linux, Windows, macOS
+- Tendencias: microservices, edge computing, IoT OS
+- Futuro: OS para AI/ML, quantum computing
 
 **Práctica (4 horas):**
-- Integración de todos los componentes
-- Testing exhaustivo del sistema completo
-- Documentación técnica completa
-- Presentación de proyectos finales
+- Integración de todos los componentes (8 capítulos)
+- Sistema operativo educativo completo y funcional
+- Testing exhaustivo y benchmarks de rendimiento
+- Documentación técnica completa y presentaciones
 
-**Entregable:** Sistema operativo completo con documentación
+**Entregable:** Sistema operativo educativo completo con todos los componentes
 
 ---
 
 ## 🚀 TRABAJO PRÁCTICO FINAL INTEGRADOR
-### "Sistema Operativo Multimedia Educativo"
+### "Sistema Operativo Completo con 8 Componentes Avanzados"
 
 #### **Objetivo:**
-Extender el mini-kernel educativo con capacidades multimedia y de red, implementando un sistema operativo funcional con interfaz gráfica básica.
+Integrar todos los 8 capítulos del curso en un sistema operativo educativo completo, implementando desde bootloader hasta virtualización, con énfasis en funcionalidad real y robustez.
 
-#### **Requerimientos del Proyecto (Obligatorios):**
+#### **Requerimientos del Proyecto (Obligatorios - Basados en los 8 Capítulos):**
 
-**1. Sistema de Archivos Avanzado (Semanas 1-4)**
-- Implementar subdirectorios reales con navegación (`cd`, `..`, rutas absolutas)
-- Agregar soporte para archivos binarios y metadatos extendidos
-- Crear sistema de enlaces simbólicos y duros
-- Implementar journaling básico para integridad de datos
+**1. Arquitectura x86 y Bootloader Avanzado (CAPÍTULO 1)**
+- Bootloader Multiboot completo con detección de hardware
+- Soporte para múltiples modos de CPU (Real, Protected, Long)
+- Detección automática de memoria y dispositivos
+- Carga de módulos iniciales y configuración dinámica
 
-**2. Multitasking Real (Semanas 5-8)**
-- Implementar scheduler preemptive con múltiples colas de prioridad
-- Crear al menos 3 procesos que ejecuten concurrentemente
-- Agregar soporte para procesos en background (`&`)
-- Implementar señales básicas (SIGKILL, SIGSTOP, SIGCONT)
+**2. Gestión de Memoria Completa (CAPÍTULO 2)**
+- Implementar paginación completa con gestión de page faults
+- Sistema de memoria virtual con swap básico
+- Heap dinámico con malloc/free optimizado y detección de leaks
+- Protección de memoria con segmentación y control de acceso
 
-**3. Interfaz Gráfica Básica (Semanas 9-12)**
-- Implementar modo gráfico VGA 320x200x256
-- Crear sistema de ventanas básico con al menos 2 ventanas concurrentes
-- Implementar mouse driver PS/2 con cursor gráfico
-- Crear al menos 3 aplicaciones gráficas:
-  - Editor de texto con scroll
-  - Calculadora con interfaz gráfica
-  - Juego simple (Tetris, Snake, o similar)
+**3. Sistema de Archivos Jerárquico (CAPÍTULO 3)**
+- FAT16 extendido con subdirectorios completos
+- Operaciones avanzadas: enlaces, permisos, metadata
+- Sistema de cache de archivos para rendimiento
+- Journaling básico para integridad y recuperación
 
-**4. Red y Comunicaciones (Semanas 13-16)**
-- Implementar stack TCP/IP básico (solo ping y echo)
-- Crear servidor HTTP mínimo que sirva páginas estáticas
-- Implementar cliente Telnet básico
-- Agregar soporte para transferencia de archivos simple
+**4. Shell y IPC Completo (CAPÍTULO 4)**
+- Shell con +40 comandos, pipes múltiples, y scripting básico
+- Sistema completo de IPC: pipes, shared memory, signals
+- Job control avanzado (background, foreground, suspend)
+- Redirección completa de E/S y variables de entorno
+
+**5. Interrupciones y Manejo de Eventos (CAPÍTULO 5)**
+- IDT completo con handlers para todas las excepciones x86
+- Sistema de interrupciones anidadas y prioridades
+- Drivers completos para PIT, PIC, keyboard, mouse
+- Manejo robusto de errores y recovery automático
+
+**6. Multitasking Preemptivo (CAPÍTULO 6)**
+- Scheduler multinivel con Round Robin, Priority, y MLFQ
+- Context switching optimizado con soporte para FPU
+- Sistema completo de procesos con fork(), exec(), wait()
+- Sincronización con semáforos, mutexes, y condition variables
+
+**7. Stack de Red Funcional (CAPÍTULO 7)**
+- Protocolos Ethernet, IP, TCP, UDP, ICMP completamente implementados
+- Driver de red simulado con buffer management
+- Socket API básico para aplicaciones de red
+- Herramientas de red: ping, netstat, ifconfig, servidor echo
+
+**8. Seguridad y Virtualización (CAPÍTULO 8)**
+- Sistema de usuarios con autenticación y permisos UNIX-style
+- Protecciones contra buffer overflow, ASLR, stack canaries
+- Hypervisor básico capaz de ejecutar VMs simples
+- Sistema de contenedores con aislamiento de namespaces
 
 #### **Características Técnicas Obligatorias:**
 
