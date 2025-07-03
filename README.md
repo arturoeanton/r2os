@@ -1,22 +1,25 @@
-# Mini Kernel Educativo - Sistema Operativo en C
+# 🎓 Mini Kernel Educativo - Curso Completo de Sistemas Operativos
 
 ## 📚 Propósito Educativo
 
-Este proyecto implementa un **sistema operativo mínimo** diseñado específicamente para estudiantes que desean comprender los fundamentos de un OS desde cero. El código está completamente documentado en español y incluye explicaciones pedagógicas de cada componente.
+Este proyecto implementa un **sistema operativo educativo completo** diseñado específicamente para estudiantes universitarios y autodidactas que desean comprender los fundamentos de los sistemas operativos desde cero. El código está completamente documentado en español y incluye un **curso estructurado de 8 capítulos** con más de 32 ejercicios prácticos.
 
-El sistema cuenta con **más de 35 comandos** de shell, sistema de **pipes funcional**, **edición de archivos en línea**, y un **sistema de archivos FAT16 completo**, proporcionando una experiencia educativa similar a un sistema UNIX básico.
+El sistema cuenta con **más de 35 comandos** de shell, sistema de **pipes funcional**, **edición de archivos en línea**, **sistema de archivos FAT16 completo**, **stack de red TCP/IP**, **multitasking preemptivo**, y **capacidades de virtualización**, proporcionando una experiencia educativa comparable a sistemas operativos reales.
 
 ## 🎯 Objetivos de Aprendizaje
 
 Al estudiar y extender este proyecto, los estudiantes aprenderán:
 
-- **Arquitectura x86**: Programación en ensamblador y modo protegido
-- **Bootloader**: Proceso de arranque desde BIOS hasta kernel
-- **Gestión de memoria**: Manejo directo de memoria física
-- **Sistemas de archivos**: Implementación de FAT16 simplificado
-- **Entrada/Salida**: Controladores de teclado PS/2 y pantalla VGA
-- **Shell y Pipes**: Intérprete de comandos con comunicación inter-proceso
-- **Cross-compilation**: Toolchain para desarrollo de sistemas embebidos
+- **Arquitectura x86**: Programación en ensamblador y modo protegido completo
+- **Bootloader**: Proceso de arranque desde BIOS hasta kernel con Multiboot
+- **Gestión de memoria**: Paginación, memoria virtual, y protección de memoria
+- **Sistemas de archivos**: Implementación de FAT16 con journaling y cache
+- **Entrada/Salida**: Controladores completos y manejo de interrupciones
+- **Shell y Pipes**: Intérprete avanzado con IPC y job control
+- **Multitasking**: Scheduler preemptivo con sincronización
+- **Redes**: Stack TCP/IP completo con sockets
+- **Seguridad**: Control de acceso, usuarios, y virtualización
+- **Cross-compilation**: Toolchain profesional con Docker
 
 ## 🏗️ Arquitectura del Sistema
 
@@ -54,28 +57,54 @@ Al estudiar y extender este proyecto, los estudiantes aprenderán:
 4. **Shell** presenta prompt interactivo con historial y navegación
 5. **Usuario** ejecuta comandos y pipes de forma interactiva
 
-## 📁 Estructura de Archivos
+## 📁 Estructura del Repositorio
 
 ```
 r2os/
-├── kernel.c           # Núcleo principal (2000+ líneas)
-├── boot.s             # Bootloader Multiboot
-├── linker.ld          # Script del linker
-├── Makefile           # Sistema de construcción
-├── README.md          # Este archivo
-├── CLAUDE.md          # Instrucciones para desarrollo
-├── curso/             # 📚 Material educativo completo
-│   ├── PLAN_CURSO_SO.md    # Plan del curso de 4 meses
-│   ├── CAPITULO_01.md      # Arquitectura x86 y Bootloaders
-│   ├── CAPITULO_02.md      # Gestión de Memoria y E/S
-│   ├── CAPITULO_03.md      # Sistemas de Archivos
-│   ├── CAPITULO_04.md      # Shell y Comunicación Inter-Proceso
-│   └── README.md           # Guía del curso
-└── docker-build/      # 🐳 Entorno Docker de desarrollo
-    ├── Dockerfile          # Imagen con i686-elf-gcc
-    ├── Makefile           # Comandos Docker simplificados
-    ├── README.md          # Documentación Docker
-    └── .dockerignore      # Optimización de contexto
+├── 🔧 CÓDIGO FUENTE PRINCIPAL
+│   ├── kernel.c           # Núcleo principal (2000+ líneas)
+│   ├── boot.s             # Bootloader Multiboot
+│   ├── linker.ld          # Script del linker
+│   ├── Makefile           # Sistema de construcción
+│   └── CLAUDE.md          # Instrucciones para desarrollo
+│
+├── 📚 CURSO EDUCATIVO COMPLETO (curso/)
+│   ├── PRE_CURSO_00.md    # 🔰 Fundamentos de C y Ensamblador
+│   ├── PRE_CURSO_01.md    # 🛠️ Herramientas y Entorno de Desarrollo
+│   ├── CAPITULO_01.md     # 🔧 Arquitectura x86 y Bootloaders
+│   ├── CAPITULO_02.md     # 💾 Gestión de Memoria y E/S
+│   ├── CAPITULO_03.md     # 🗃️ Sistemas de Archivos
+│   ├── CAPITULO_04.md     # 🖥️ Shell y Comunicación Inter-Proceso
+│   ├── CAPITULO_05.md     # ⚡ Interrupciones y Excepciones
+│   ├── CAPITULO_06.md     # 🔄 Multitasking y Scheduler
+│   ├── CAPITULO_07.md     # 🌐 Redes y Protocolos
+│   ├── CAPITULO_08.md     # 🔒 Seguridad y Virtualización
+│   ├── PLAN_CURSO_SO.md   # 📋 Plan completo del curso (16 semanas)
+│   └── README.md          # 📖 Guía del curso
+│
+├── 🐳 ENTORNO DOCKER HÍBRIDO (docker-build/)
+│   ├── Dockerfile         # Imagen con toolchain completo
+│   ├── Makefile          # Comandos Docker + QEMU host
+│   ├── README.md         # Documentación completa
+│   └── run-macos-gui.sh  # Script para macOS con GUI
+│
+├── 📋 DOCUMENTACIÓN DE DESARROLLO (docs/)
+│   ├── INSTRUCCIONES_PIPE.md  # Desarrollo de pipes
+│   ├── PIPES_MEJORADOS.md     # Mejoras implementadas
+│   └── TEST_PIPES_FIXED.md    # Tests y verificaciones
+│
+├── 🛠️ SCRIPTS Y HERRAMIENTAS (scripts/)
+│   ├── Makefile.debug     # Makefile para debugging
+│   └── Makefile.test      # Makefile para testing
+│
+├── 💡 EJEMPLOS Y TESTS (examples/)
+│   ├── debug-kernel.c     # Kernel de debugging
+│   └── test-kernel.c      # Kernel de pruebas
+│
+└── 🏗️ ARCHIVOS COMPILADOS (build/)
+    ├── *.o               # Archivos objeto
+    ├── *.elf             # Ejecutables
+    └── *.bin             # Binarios
 ```
 
 ## 🚀 Compilación y Ejecución
@@ -239,26 +268,39 @@ shell> insln archivo.txt 2                  # Insertar línea en blanco en posic
 - **Detección de errores** y validación
 - **Metadata completa** (tamaño, atributos, clusters)
 
-## 📚 Material Educativo
+## 📚 Material Educativo Completo
 
-### 📚 Curso Completo de Sistemas Operativos (carpeta `curso/`)
+### 🎓 Curso Integral de Sistemas Operativos (carpeta `curso/`)
+
+#### 🔰 **Prerrequisitos (2 capítulos)**
+1. **PRE_CURSO_00.md** - Fundamentos de C y Ensamblador
+2. **PRE_CURSO_01.md** - Herramientas y Entorno de Desarrollo
+
+#### 📖 **Capítulos Principales (8 capítulos)**
 1. **CAPITULO_01.md** - Arquitectura x86 y Bootloaders
 2. **CAPITULO_02.md** - Gestión de Memoria y E/S
 3. **CAPITULO_03.md** - Sistemas de Archivos
 4. **CAPITULO_04.md** - Shell y Comunicación Inter-Proceso
+5. **CAPITULO_05.md** - Interrupciones y Excepciones
+6. **CAPITULO_06.md** - Multitasking y Scheduler
+7. **CAPITULO_07.md** - Redes y Protocolos
+8. **CAPITULO_08.md** - Seguridad y Virtualización
 
-### 📅 Plan de Estudio de 4 Meses
+### 📅 Plan de Estudio de 4 Meses (16 Semanas)
 - **PLAN_CURSO_SO.md** - Cronograma detallado semanal
-- **16 semanas** de contenido progresivo
-- **Proyectos prácticos** cada semana
-- **Evaluaciones** y trabajo final integrador
+- **32 ejercicios prácticos** distribuidos en 8 capítulos
+- **Proyectos semanales** con evaluación
+- **4 exámenes parciales** distribuidos por mes
+- **Proyecto final integrador** que combina todos los capítulos
 - **Extensiones avanzadas** para estudiantes destacados
 
-### 🐳 Entorno Docker (carpeta `docker-build/`)
-- **Setup automático** de cross-compiler i686-elf-gcc
-- **QEMU integrado** para emulación
+### 🐳 Entorno Docker Híbrido (carpeta `docker-build/`)
+- **Compilación en Docker**: Cross-compiler i686-elf-gcc aislado
+- **Ejecución en Host**: QEMU nativo (sin XQuartz/X11)
+- **Setup automático**: Un comando instala todo
+- **GUI nativa**: Ventana QEMU del sistema operativo
 - **Funciona en Linux, macOS y Windows**
-- **Sin configuración compleja** de herramientas
+- **Cero configuración**: `make setup-all` y listo
 
 ## 🎓 Ejercicios y Proyectos
 
@@ -336,7 +378,22 @@ Proyecto educativo de código abierto. Libre para uso académico y educativo.
 
 ## 🚀 **¡Empezar es fácil!**
 
-### 🐳 Con Docker (Recomendado)
+> 📖 **¿Primera vez aquí?** Lee [INICIO_RAPIDO.md](INICIO_RAPIDO.md) para una guía completa en 5 minutos.
+
+### 🎓 **Opción 1: Curso Completo (Recomendado para aprender)**
+```bash
+git clone <repository>
+cd r2os/curso
+
+# 📖 Prerrequisitos (si es necesario)
+# Leer PRE_CURSO_00.md (C y Ensamblador)
+# Leer PRE_CURSO_01.md (Herramientas)
+
+# 🚀 Comenzar el curso
+# Seguir README.md del curso para la progresión completa
+```
+
+### 🐳 **Opción 2: Ejecución Rápida con Docker**
 ```bash
 git clone <repository>
 cd r2os/docker-build
@@ -344,20 +401,35 @@ make setup-all    # Configura todo automáticamente
 make run-gui      # ¡Compilar y ejecutar con ventana!
 ```
 
-### 🔧 Instalación Local
+### 🔧 **Opción 3: Instalación Local**
 ```bash
 git clone <repository>
 cd r2os
 make run        # (Requiere i686-elf-gcc instalado)
 ```
 
-### 💻 En el shell del kernel:
+### 💻 **En el shell del kernel:**
 ```bash
-shell> help
-shell> testpipe    # Si tienes problemas con el carácter |
-shell> echo "Hello World" | rev
-shell> ls | wc
-shell> cat curso/README.md    # ¡Explorar el curso!
+shell> help                           # Ver todos los comandos (35+)
+shell> echo "Hello World" | rev       # Probar pipes
+shell> ls | wc                        # Contar archivos
+shell> cat README.md | head 10        # Ver primeras líneas
+shell> touch test.txt                 # Crear archivo
+shell> echo "Contenido" > test.txt    # Escribir archivo
+shell> ls -l                          # Listar con detalles
 ```
 
-**¡Explora, experimenta y aprende cómo funciona un sistema operativo desde adentro!** 🎓✨🐳
+### 📚 **Explorar el curso educativo:**
+```bash
+# Leer la guía completa del curso
+shell> cat curso/README.md
+
+# Comenzar con prerrequisitos
+shell> cat curso/PRE_CURSO_00.md      # C y Ensamblador
+shell> cat curso/PRE_CURSO_01.md      # Herramientas
+
+# Primer capítulo del curso
+shell> cat curso/CAPITULO_01.md       # Arquitectura x86
+```
+
+**¡Explora, experimenta y domina los sistemas operativos desde los fundamentos hasta lo más avanzado!** 🎓✨🐳
